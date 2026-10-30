@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     async function loadPatients() {
       try {
-        const response = await fetch("http://127.0.0.1:8000/patients");
+        const response = await fetch("https://hospital-digital-twin-api.onrender.com/patients");
 
         if (!response.ok) {
           throw new Error("Unable to load patient records");
