@@ -7,6 +7,7 @@ import os
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase
 
 # Load credentials from .env
@@ -35,6 +36,17 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Patient Digital Twin",
     lifespan=lifespan
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+    ],
+    allow_methods=["GET"],
+    allow_headers=["*"],
 )
 
 # Home endpoint
@@ -66,4 +78,32 @@ def health():
         raise HTTPException(
             status_code=503,
             detail="Database connection failed"
+        )
+
+@app.get("/patients")
+def get_patients():
+    try:
+        with driver.session(database=DATABASE) as session:
+            result = session.run("""
+                MATCH (p:Patient)
+                RETURN
+                    p.patientId AS patientId,
+                    p.name AS name,
+                    p.age AS age,
+                    p.city AS city
+                ORDER BY patientId
+            """)
+
+            patients = [record.data() for record in result]
+
+        return {
+            "total": len(patients),
+            "patients": patients
+        }
+
+    except Exception as e:
+        print("PATIENT QUERY ERROR:", type(e).__name__)
+        raise HTTPException(
+            status_code=503,
+            detail="Unable to retrieve patients"
         )
