@@ -227,3 +227,91 @@ footer {
     flex-wrap: wrap;
   }
 }
+
+/* Patient Digital Twin Dashboard */
+
+.twin-details {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.twin-details > h3 {
+  margin: 26px 0 14px;
+  color: #1e293b;
+  font-size: 20px;
+}
+
+.twin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.twin-info-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.twin-info-card h4 {
+  margin: 0 0 10px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.twin-info-card p {
+  margin: 6px 0;
+  color: #475569;
+  font-size: 15px;
+}
+
+.twin-grid .twin-info-card {
+  margin-bottom: 0;
+}
+
+.twin-grid .twin-info-card p {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f766e;
+}
+
+.profile {
+  position: relative;
+}
+
+.profile .close {
+  cursor: pointer;
+}
+
+.demo-note {
+  margin-top: 24px;
+  padding: 12px;
+  border-left: 3px solid #0f766e;
+  background: #f0fdfa;
+  color: #475569;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* Mobile responsive layout */
+
+@media (max-width: 768px) {
+  .twin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .twin-details .stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .twin-info-card {
+    padding: 14px;
+  }
+}
